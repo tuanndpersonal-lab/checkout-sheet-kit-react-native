@@ -24,8 +24,9 @@ SOFTWARE.
 
 #import <React/RCTBridgeModule.h>
 #import <React/RCTViewManager.h>
+#import <RNShopifyCheckoutSheetKitSpec/RNShopifyCheckoutSheetKitSpec.h>
 
-@interface RCT_EXTERN_MODULE (RCTShopifyCheckoutSheetKit, NSObject)
+@interface RCT_EXTERN_MODULE (RCTShopifyCheckoutSheetKit, NativeShopifyCheckoutSheetKitSpecBase)
 
 /**
  * Present checkout
@@ -76,6 +77,11 @@ RCT_EXTERN_METHOD(
  * Check if Apple Pay is available
  */
 RCT_EXTERN_METHOD(isApplePayAvailable : (RCTPromiseResolveBlock)resolve reject : (RCTPromiseRejectBlock)reject);
+
+/**
+ * Respond to geolocation permission request
+ */
+RCT_EXTERN_METHOD(initiateGeolocationRequest : (BOOL)allow);
 
 @end
 
