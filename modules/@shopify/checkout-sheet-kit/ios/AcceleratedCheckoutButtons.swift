@@ -120,6 +120,12 @@ class RCTAcceleratedCheckoutButtonsView: UIView {
         }
     }
 
+    @objc var applePayStyle: String? {
+        didSet {
+            updateView()
+        }
+    }
+
     @objc var onFail: RCTBubblingEventBlock?
     @objc var onComplete: RCTBubblingEventBlock?
     @objc var onCancel: RCTBubblingEventBlock?
@@ -207,7 +213,7 @@ class RCTAcceleratedCheckoutButtonsView: UIView {
         updateView()
     }
 
-    private func attachModifiers(to buttons: AcceleratedCheckoutButtons, wallets: [Wallet]?, applePayLabel: PayWithApplePayButtonLabel?) -> AcceleratedCheckoutButtons {
+    private func attachModifiers(to buttons: AcceleratedCheckoutButtons, wallets: [Wallet]?, applePayLabel: PayWithApplePayButtonLabel?, applePayStyle: PayWithApplePayButtonStyle?) -> AcceleratedCheckoutButtons {
         var modifiedButtons = buttons
 
         if let wallets {
@@ -216,6 +222,10 @@ class RCTAcceleratedCheckoutButtonsView: UIView {
 
         if let applePayLabel {
             modifiedButtons = modifiedButtons.applePayLabel(applePayLabel)
+        }
+
+        if let applePayStyle {
+            modifiedButtons = modifiedButtons.applePayStyle(applePayStyle)
         }
 
         if let cornerRadius {
@@ -276,8 +286,8 @@ class RCTAcceleratedCheckoutButtonsView: UIView {
             return
         }
 
-        // Attach modifiers (wallets, applePayLabel, cornerRadius)
-        buttons = attachModifiers(to: buttons, wallets: shopifyWallets, applePayLabel: PayWithApplePayButtonLabel.from(applePayLabel))
+        // Attach modifiers (wallets, applePayLabel, applePayStyle, cornerRadius)
+        buttons = attachModifiers(to: buttons, wallets: shopifyWallets, applePayLabel: PayWithApplePayButtonLabel.from(applePayLabel), applePayStyle: PayWithApplePayButtonStyle.from(applePayStyle))
         // Attach event handlers
         buttons = attachEventListeners(to: buttons)
 

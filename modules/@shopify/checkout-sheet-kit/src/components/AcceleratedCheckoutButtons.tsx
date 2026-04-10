@@ -61,6 +61,15 @@ export enum ApplePayLabel {
   topUp = 'topUp',
 }
 
+export const ApplePayStyle = {
+  automatic: 'automatic',
+  black: 'black',
+  white: 'white',
+  whiteOutline: 'whiteOutline',
+} as const;
+
+export type ApplePayStyle = (typeof ApplePayStyle)[keyof typeof ApplePayStyle];
+
 type CheckoutIdentifier =
   | {
       cartId: string;
@@ -86,6 +95,12 @@ interface CommonAcceleratedCheckoutButtonsProps {
    * Label for the Apple Pay button
    */
   applePayLabel?: ApplePayLabel;
+
+  /**
+   * Style for the Apple Pay button color
+   * Defaults to 'automatic' which adapts to the current appearance (light/dark mode)
+   */
+  applePayStyle?: ApplePayStyle;
 
   /**
    * Called when checkout fails
@@ -148,6 +163,7 @@ export type AcceleratedCheckoutButtonsProps = (CartProps | VariantProps) &
 
 interface NativeAcceleratedCheckoutButtonsProps {
   applePayLabel?: string;
+  applePayStyle?: string;
   style?: ViewStyle;
   checkoutIdentifier: CheckoutIdentifier;
   cornerRadius?: number;
@@ -193,6 +209,7 @@ export const AcceleratedCheckoutButtons: React.FC<
   AcceleratedCheckoutButtonsProps
 > = ({
   applePayLabel,
+  applePayStyle,
   cornerRadius,
   wallets,
   onFail,
@@ -307,6 +324,7 @@ export const AcceleratedCheckoutButtons: React.FC<
   return (
     <RCTAcceleratedCheckoutButtons
       applePayLabel={applePayLabel}
+      applePayStyle={applePayStyle}
       style={{...defaultStyles, height: dynamicHeight}}
       checkoutIdentifier={checkoutIdentifier}
       cornerRadius={cornerRadius}
